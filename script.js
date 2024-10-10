@@ -21,6 +21,42 @@ document.addEventListener('DOMContentLoaded', function() {
     window.addEventListener('scroll', animateOnScroll);
     animateOnScroll(); // Initial check on page load
 
+    // Mobile Menu Toggle
+    const mobileMenuIcon = document.querySelector('.mobile-menu-icon');
+    const nav = document.querySelector('nav');
+
+    mobileMenuIcon.addEventListener('click', function() {
+        nav.classList.toggle('mobile-menu-open');
+    });
+
+    // Dish Slider
+    const dishSlider = document.querySelector('.dish-slider');
+    let isDown = false;
+    let startX;
+    let scrollLeft;
+
+    dishSlider.addEventListener('mousedown', (e) => {
+        isDown = true;
+        startX = e.pageX - dishSlider.offsetLeft;
+        scrollLeft = dishSlider.scrollLeft;
+    });
+
+    dishSlider.addEventListener('mouseleave', () => {
+        isDown = false;
+    });
+
+    dishSlider.addEventListener('mouseup', () => {
+        isDown = false;
+    });
+
+    dishSlider.addEventListener('mousemove', (e) => {
+        if (!isDown) return;
+        e.preventDefault();
+        const x = e.pageX - dishSlider.offsetLeft;
+        const walk = (x - startX) * 2;
+        dishSlider.scrollLeft = scrollLeft - walk;
+    });
+
     function updateOrderSummary() {
         orderItems.innerHTML = '';
         let total = 0;
