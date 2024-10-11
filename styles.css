@@ -99,6 +99,8 @@ h1, h2, h3 {
 .hero-image {
     flex: 1;
     text-align: right;
+    margin-right: 2rem;
+    margin-left: 2rem;
 }
 
 .hero-image img {
@@ -159,6 +161,12 @@ h1, h2, h3 {
     border-radius: 10px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     margin-bottom: 2rem;
+}
+
+.testimonial:hover {
+    transition: transform 0.3s ease;
+    transform: translateY(-5px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
 .testimonials h2 {
@@ -230,7 +238,7 @@ h1, h2, h3 {
 
 .dish {
     flex: 0 0 auto;
-    width: 250px;
+    width: 280px;
     margin-right: 1rem;
     scroll-snap-align: start;
     background-color: #fff;
@@ -259,57 +267,6 @@ h1, h2, h3 {
     font-size: 0.9rem;
     color: #666;
     margin: 0 1rem 1rem;
-}
-
-/* App Download Section */
-.app-download {
-    display: flex;
-    align-items: center;
-    background-color: #f9f9f9;
-    padding: 3rem;
-    border-radius: 10px;
-    margin-bottom: 3rem;
-}
-
-.app-content {
-    flex: 1;
-}
-
-.app-buttons {
-    display: flex;
-    gap: 1rem;
-    margin-top: 1rem;
-}
-
-.app-button {
-    display: inline-flex;
-    align-items: center;
-    background-color: #333;
-    color: #fff;
-    padding: 0.8rem 1.5rem;
-    border-radius: 5px;
-    text-decoration: none;
-    font-weight: bold;
-    transition: background-color 0.3s ease;
-}
-
-.app-button:hover {
-    background-color: #555;
-}
-
-.app-button i {
-    margin-right: 0.5rem;
-    font-size: 1.2rem;
-}
-
-.app-image {
-    flex: 1;
-    text-align: center;
-}
-
-.app-image img {
-    max-width: 100%;
-    height: auto;
 }
 
 /* Updated Footer Styles */
@@ -797,9 +754,9 @@ footer {
     }
 }
 
-.animate-float {
+/* .animate-float {
     animation: float 3s ease-in-out infinite;
-}
+} */
 
 .animate-on-scroll {
     opacity: 0;
