@@ -4,6 +4,9 @@ document.addEventListener('DOMContentLoaded', function() {
     const totalPrice = document.getElementById('total-price');
     const clearOrderButton = document.getElementById('clear-order');
     const checkoutButton = document.getElementById('checkout-button');
+    const cartButton = document.getElementById('cart-button');
+    const orderSummary = document.getElementById('order-summary');
+    const closeSummaryButton = document.querySelector('.close-summary'); // Select the new close button
     let order = [];
 
     // Animate elements on scroll
@@ -106,4 +109,52 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
+    // Add item to the order
+    addToOrderButtons.forEach(button => {
+        button.addEventListener('click', function () {
+            const foodItem = this.closest('.food-item');
+            const name = foodItem.getAttribute('data-name');
+            const price = parseFloat(foodItem.getAttribute('data-price'));
+
+            // Add the item to the order list
+            orderItems.push({ name, price });
+            totalPrice += price;
+            updateOrderList();
+        });
+    });
+
+    // Function to update the order list and total price
+    function updateOrderList() {
+        // Clear the current list
+        orderItemsContainer.innerHTML = '';
+
+        // Add each item in the order to the list
+        orderItems.forEach(item => {
+            const listItem = document.createElement('li');
+            listItem.innerHTML = `
+                <span>${item.name}</span>
+                <span>$${item.price.toFixed(2)}</span>
+            `;
+            orderItemsContainer.appendChild(listItem);
+        });
+
+        // Update the total price
+        totalPriceElement.innerText = `Total: $${totalPrice.toFixed(2)}`;
+    }
+
+    // Toggle the sliding order summary
+    cartButton.addEventListener('click', function () {
+        orderSummary.classList.toggle('show');
+    });
+
+    closeSummaryButton.addEventListener('click', function() {
+        orderSummary.classList.remove('show'); // Close the order summary
+    });
+
+    // Clear the order
+    clearOrderButton.addEventListener('click', function () {
+        orderItems = [];
+        totalPrice = 0;
+        updateOrderList();
+    });
 });
