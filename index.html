@@ -30,7 +30,7 @@
                 <a href="menu.html" class="cta-button">Order Now</a>
             </div>
             <div class="hero-image">
-                <img src="https://www.shutterstock.com/image-photo/brunch-table-setting-different-delicious-600nw-2148532261.jpg" alt="Delicious food spread" class="animate-float">
+                <img src="https://www.shutterstock.com/image-photo/brunch-table-setting-different-delicious-600nw-2148532261.jpg" alt="Delicious food spread">
             </div>
         </section>
 
@@ -54,26 +54,28 @@
 
         <section class="popular-dishes">
             <h2>Popular Dishes</h2>
-            <div class="dish-slider">
-                <div class="dish">
-                    <img src="https://cdn.loveandlemons.com/wp-content/uploads/2023/07/margherita-pizza-recipe.jpg" alt="Margherita Pizza">
-                    <h3>Margherita Pizza</h3>
-                    <p>Classic Italian pizza with fresh mozzarella and basil</p>
-                </div>
-                <div class="dish">
-                    <img src="https://www.skinnytaste.com/wp-content/uploads/2011/06/Chicken-Tikka-Masala-15.jpg" alt="Chicken Tikka Masala">
-                    <h3>Chicken Tikka Masala</h3>
-                    <p>Tender chicken in a creamy tomato-based sauce</p>
-                </div>
-                <div class="dish">
-                    <img src="https://sushidelivery.my/cdn/shop/products/NPPS18_4314x.jpg?v=1626422765" alt="Sushi Platter">
-                    <h3>Sushi Platter</h3>
-                    <p>Assorted fresh sushi rolls and sashimi</p>
-                </div>
-                <div class="dish">
-                    <img src="https://www.bennettopie.com/cdn/shop/articles/Gourmet_Beef_Burger.jpg?v=1697105071&width=1100" alt="Beef Burger">
-                    <h3>Gourmet Beef Burger</h3>
-                    <p>Juicy beef patty with premium toppings</p>
+            <div class="dish-slider-container">
+                <div class="dish-slider">
+                    <div class="dish">
+                        <img src="https://cdn.loveandlemons.com/wp-content/uploads/2023/07/margherita-pizza-recipe.jpg" alt="Margherita Pizza">
+                        <h3>Margherita Pizza</h3>
+                        <p>Classic Italian pizza with fresh mozzarella and basil</p>
+                    </div>
+                    <div class="dish">
+                        <img src="https://www.skinnytaste.com/wp-content/uploads/2011/06/Chicken-Tikka-Masala-15.jpg" alt="Chicken Tikka Masala">
+                        <h3>Chicken Tikka Masala</h3>
+                        <p>Tender chicken in a creamy tomato-based sauce</p>
+                    </div>
+                    <div class="dish">
+                        <img src="https://sushidelivery.my/cdn/shop/products/NPPS18_4314x.jpg?v=1626422765" alt="Sushi Platter">
+                        <h3>Sushi Platter</h3>
+                        <p>Assorted fresh sushi rolls and sashimi</p>
+                    </div>
+                    <div class="dish">
+                        <img src="https://www.bennettopie.com/cdn/shop/articles/Gourmet_Beef_Burger.jpg?v=1697105071&width=1100" alt="Beef Burger">
+                        <h3>Gourmet Beef Burger</h3>
+                        <p>Juicy beef patty with premium toppings</p>
+                    </div>
                 </div>
             </div>
         </section>
@@ -106,39 +108,15 @@
         </section>
     </main>
 
-    <footer>
-        <div class="footer-content">
-            <div class="footer-section">
-                <h3>Contact Us</h3>
-                <p><i class="fas fa-map-marker-alt"></i> 123 Foodie Street, Tastyville, TS 12345</p>
-                <p><i class="fas fa-phone"></i> (555) 123-4567</p>
-                <p><i class="fas fa-envelope"></i> info@tastybites.com</p>
-            </div>
-            <div class="footer-section">
-                <h3>Quick Links</h3>
-                <ul>
-                    <li><a href="about.html">About Us</a></li>
-                    <li><a href="menu.html">Menu</a></li>
-                    <li><a href="#">FAQ</a></li>
-                    <li><a href="#">Terms of Service</a></li>
-                    <li><a href="#">Privacy Policy</a></li>
-                </ul>
-            </div>
-            <div class="footer-section">
-                <h3>Follow Us</h3>
-                <div class="social-icons">
-                    <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
-                    <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
-                    <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
-                    <a href="#" class="social-icon"><i class="fab fa-youtube"></i></a>
-                </div>
-            </div>
-        </div>
-        <div class="copyright">
-            <p>&copy; 2023 Tasty Bites. All rights reserved.</p>
-        </div>
-    </footer>
+    <div id="footer-placeholder"></div>
 
     <script src="script.js"></script>
+    <script>
+        fetch('components/footer.html')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('footer-placeholder').innerHTML = data;
+            });
+    </script>
 </body>
 </html>
