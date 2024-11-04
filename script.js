@@ -1,3 +1,42 @@
+const menuData = {
+    'appetizers': [
+        { name: 'Spring Rolls', price: 5.99, image: 'https://images.unsplash.com/photo-1544037803-b17d332fcc90', description: 'Crispy vegetable spring rolls served with sweet chili sauce' },
+        { name: 'Chicken Wings', price: 8.99, image: 'https://images.unsplash.com/photo-1608039858788-667850f129d3', description: 'Spicy buffalo wings served with blue cheese dip' },
+        { name: 'Bruschetta', price: 6.99, image: 'https://images.unsplash.com/photo-1572695157366-5e585ab2b69f', description: 'Toasted bread topped with fresh tomatoes, garlic, and basil' },
+        { name: 'Calamari Rings', price: 9.99, image: 'https://images.unsplash.com/photo-1599487488170-d11ec9c172f0', description: 'Crispy fried squid rings with marinara sauce' },
+        { name: 'Spinach Artichoke Dip', price: 7.99, image: 'https://images.unsplash.com/photo-1576506295286-5cda18df43e7', description: 'Creamy spinach and artichoke dip with tortilla chips' },
+        { name: 'Mozzarella Sticks', price: 6.99, image: 'https://images.unsplash.com/photo-1531749668029-257fe5f3d34f', description: 'Breaded mozzarella sticks with marinara sauce' },
+        { name: 'Nachos Supreme', price: 10.99, image: 'https://images.unsplash.com/photo-1513456852971-30c0b8199d4d', description: 'Loaded nachos with cheese, jalapeños, and all the toppings' }
+    ],
+    'main-course': [
+        { name: 'Grilled Salmon', price: 24.99, image: 'https://images.unsplash.com/photo-1467003909585-2f8a72700288', description: 'Fresh salmon fillet with lemon butter sauce' },
+        { name: 'Beef Steak', price: 29.99, image: 'https://images.unsplash.com/photo-1600891964092-4316c288032e', description: 'Premium cut beef steak with mushroom sauce' },
+        { name: 'Chicken Alfredo', price: 18.99, image: 'https://images.unsplash.com/photo-1645112411341-6c4fd023714a', description: 'Creamy pasta with grilled chicken and parmesan' },
+        { name: 'Vegetable Curry', price: 16.99, image: 'https://images.unsplash.com/photo-1455619452474-d2be8b1e70cd', description: 'Mixed vegetables in aromatic curry sauce' },
+        { name: 'BBQ Ribs', price: 26.99, image: 'https://images.unsplash.com/photo-1544025162-d76694265947', description: 'Tender pork ribs with house BBQ sauce' },
+        { name: 'Seafood Paella', price: 28.99, image: 'https://images.unsplash.com/photo-1534080564583-6be75777b70a', description: 'Spanish rice dish with mixed seafood' },
+        { name: 'Eggplant Parmesan', price: 17.99, image: 'https://images.unsplash.com/photo-1629115916087-31ca04368013', description: 'Breaded eggplant with marinara and cheese' }
+    ],
+    'beverages': [
+        { name: 'Fresh Lemonade', price: 3.99, image: 'https://images.unsplash.com/photo-1621263764928-df1444c5e859', description: 'Freshly squeezed lemonade with mint' },
+        { name: 'Iced Tea', price: 2.99, image: 'https://images.unsplash.com/photo-1499638673689-79a0b5115d87', description: 'House-made iced tea with lemon' },
+        { name: 'Mango Smoothie', price: 4.99, image: 'https://images.unsplash.com/photo-1623065422902-30a2d299bbe4', description: 'Fresh mango blended with yogurt' },
+        { name: 'Espresso', price: 2.99, image: 'https://images.unsplash.com/photo-1510591509098-f4fdc6d0ff04', description: 'Double shot of premium espresso' },
+        { name: 'Green Tea', price: 2.99, image: 'https://images.unsplash.com/photo-1627435601361-ec25f5b1d0e5', description: 'Japanese green tea' },
+        { name: 'Fresh Orange Juice', price: 4.99, image: 'https://images.unsplash.com/photo-1613478223719-2ab802602423', description: 'Freshly squeezed orange juice' },
+        { name: 'Cappuccino', price: 3.99, image: 'https://images.unsplash.com/photo-1572442388796-11668a67e53d', description: 'Espresso with steamed milk foam' }
+    ],
+    'desserts': [
+        { name: 'Chocolate Cake', price: 6.99, image: 'https://images.unsplash.com/photo-1578985545062-69928b1d9587', description: 'Rich chocolate layer cake' },
+        { name: 'Cheesecake', price: 7.99, image: 'https://images.unsplash.com/photo-1533134242443-d4fd215305ad', description: 'New York style cheesecake' },
+        { name: 'Tiramisu', price: 8.99, image: 'https://images.unsplash.com/photo-1571877227200-a0d98ea607e9', description: 'Classic Italian coffee-flavored dessert' },
+        { name: 'Apple Pie', price: 5.99, image: 'https://images.unsplash.com/photo-1568571780765-9276235f1e3d', description: 'Warm apple pie with vanilla ice cream' },
+        { name: 'Crème Brûlée', price: 8.99, image: 'https://images.unsplash.com/photo-1470324161839-ce2bb6fa6bc3', description: 'Classic French custard with caramelized sugar' },
+        { name: 'Fruit Tart', price: 7.99, image: 'https://images.unsplash.com/photo-1488477181946-6428a0291777', description: 'Fresh fruit tart with pastry cream' },
+        { name: 'Chocolate Mousse', price: 6.99, image: 'https://images.unsplash.com/photo-1511911063855-2bf39afa5b2e', description: 'Light and airy chocolate mousse' }
+    ]
+};
+
 document.addEventListener('DOMContentLoaded', function() {
     // Menu page elements
     const addToOrderButtons = document.querySelectorAll('.add-to-order');
@@ -272,5 +311,109 @@ document.addEventListener('DOMContentLoaded', function() {
             showToast('Thank you for your message! We will get back to you soon.', 'success');
             contactForm.reset();
         });
+    }
+
+    // Add these new functions for menu category handling
+    function createMenuItemElement(item) {
+        const itemDiv = document.createElement('div');
+        itemDiv.className = 'food-item';
+        itemDiv.dataset.name = item.name;
+        itemDiv.dataset.price = item.price;
+
+        itemDiv.innerHTML = `
+            <img src="${item.image}" alt="${item.name}" class="food-image">
+            <div class="food-details">
+                <div class="item-info">
+                    <h3>${item.name}</h3>
+                    <p>${item.description}</p>
+                </div>
+                <div class="price-action">
+                    <span class="price">$${item.price.toFixed(2)}</span>
+                    <button class="add-to-order">
+                        <i class="fas fa-plus"></i> Add to Cart
+                    </button>
+                </div>
+            </div>
+        `;
+
+        return itemDiv;
+    }
+
+    function showCategory(category) {
+        const menuContainer = document.querySelector('.menu-container');
+        if (!menuContainer) return;
+
+        // Clear current content
+        menuContainer.innerHTML = '';
+        
+        // Create and append menu items for the selected category
+        const items = menuData[category];
+        items.forEach(item => {
+            const itemElement = createMenuItemElement(item);
+            menuContainer.appendChild(itemElement);
+        });
+
+        // Add animation class to new items
+        setTimeout(() => {
+            document.querySelectorAll('.food-item').forEach(item => {
+                item.classList.add('show');
+            });
+        }, 100);
+
+        // Reinitialize add to order buttons
+        initializeAddToOrderButtons();
+    }
+
+    // Initialize category buttons
+    const categoryButtons = document.querySelectorAll('.category-btn');
+    if (categoryButtons.length > 0) {
+        categoryButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                categoryButtons.forEach(btn => btn.classList.remove('active'));
+                button.classList.add('active');
+                showCategory(button.dataset.category);
+            });
+        });
+
+        // Show default category (appetizers)
+        showCategory('appetizers');
+    }
+
+    // Initialize floating cart button
+    const cartButton = document.querySelector('.cart-button');
+
+    if (cartButton && cartPanel && closeCart) {
+        cartButton.addEventListener('click', () => {
+            cartPanel.classList.add('open');
+        });
+
+        closeCart.addEventListener('click', () => {
+            cartPanel.classList.remove('open');
+        });
+
+        // Close cart when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!cartPanel.contains(e.target) && !cartButton.contains(e.target)) {
+                cartPanel.classList.remove('open');
+            }
+        });
+    }
+
+    function initializeAddToOrderButtons() {
+        const addToOrderButtons = document.querySelectorAll('.add-to-order');
+        if (addToOrderButtons.length > 0) {
+            addToOrderButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const foodItem = this.closest('.food-item');
+                    const name = foodItem.dataset.name;
+                    const price = parseFloat(foodItem.dataset.price);
+
+                    handleAddToCart(this);
+                    order.push({ name, price });
+                    updateOrderSummary();
+                    showToast(`Added ${name} to cart`);
+                });
+            });
+        }
     }
 });
