@@ -12,10 +12,10 @@ const menuData = {
         { name: 'Grilled Salmon', price: 24.99, image: './img/Grilled Salmon.jpg', description: 'Fresh salmon fillet with lemon butter sauce' },
         { name: 'Beef Steak', price: 29.99, image: './img/Beef Steak.jpg', description: 'Premium cut beef steak with mushroom sauce' },
         { name: 'Chicken Alfredo', price: 18.99, image: './img/Chicken Alfredo.jpg', description: 'Creamy pasta with grilled chicken and parmesan' },
-        { name: 'Vegetable Curry', price: 16.99, image: './img/Vegetable Curry.jpg', description: 'Mixed vegetables in aromatic curry sauce' },
-        { name: 'BBQ Ribs', price: 26.99, image: './img/BBQ Ribs.jpg', description: 'Tender pork ribs with house BBQ sauce' },
-        { name: 'Seafood Paella', price: 28.99, image: './img/Seafood Paella.jpg', description: 'Spanish rice dish with mixed seafood' },
-        { name: 'Eggplant Parmesan', price: 17.99, image: './img/Eggplant Parmesan.jpg', description: 'Breaded eggplant with marinara and cheese' }
+        { name: 'Margherita Pizza', price: 16.99, image: './img/Margherita Pizza.jpg', description: 'Classic Italian pizza with fresh mozzarella and basil' },
+        { name: 'Chicken Tikka Masala', price: 26.99, image: './img/Chicken Tikka Masala.jpg', description: 'Tender chicken in a creamy tomato-based sauce' },
+        { name: 'Sushi Platter', price: 28.99, image: './img/Sushi Platter.jpg', description: 'Assorted fresh sushi rolls and sashimi' },
+        { name: 'Gourmet Beef Burger', price: 17.99, image: './img/Gourmet Beef Burger.jpg', description: 'Juicy beef patty with premium toppings' }
     ],
     'beverages': [
         { name: 'Fresh Lemonade', price: 3.99, image: './img/Fresh Lemonade.jpg', description: 'Freshly squeezed lemonade with mint' },
