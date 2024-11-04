@@ -33,7 +33,7 @@ const menuData = {
         { name: 'Apple Pie', price: 5.99, image: 'https://images.unsplash.com/photo-1568571780765-9276235f1e3d', description: 'Warm apple pie with vanilla ice cream' },
         { name: 'Crème Brûlée', price: 8.99, image: 'https://images.unsplash.com/photo-1470324161839-ce2bb6fa6bc3', description: 'Classic French custard with caramelized sugar' },
         { name: 'Fruit Tart', price: 7.99, image: 'https://images.unsplash.com/photo-1488477181946-6428a0291777', description: 'Fresh fruit tart with pastry cream' },
-        { name: 'Chocolate Mousse', price: 6.99, image: 'https://images.unsplash.com/photo-1511911063855-2bf39afa5b2e', description: 'Light and airy chocolate mousse' }
+        { name: 'Chocolate Mousse', price: 6.99, image: '', description: 'Light and airy chocolate mousse' }
     ]
 };
 
