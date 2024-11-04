@@ -245,19 +245,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }, 3000);
     }
 
-    const newsletterForm = document.querySelector('.newsletter-form');
-    if (newsletterForm) {
-        newsletterForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            const emailInput = this.querySelector('input[type="email"]');
-            const email = emailInput.value;
-            
-            showToast(`Thanks for subscribing! We'll send updates to ${email}`, 'success');
-            
-            emailInput.value = '';
-        });
-    }
-
     document.addEventListener('click', function(e) {
         if (e.target.closest('.remove-item')) {
             const index = e.target.closest('.remove-item').dataset.index;
