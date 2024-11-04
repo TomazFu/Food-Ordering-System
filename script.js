@@ -38,15 +38,109 @@ const menuData = {
 };
 
 document.addEventListener('DOMContentLoaded', function() {
-    // Menu page elements
-    const addToOrderButtons = document.querySelectorAll('.add-to-order');
-    const orderItems = document.getElementById('order-items');
-    const totalPrice = document.getElementById('total-price');
-    const clearOrderButton = document.getElementById('clear-order');
-    const checkoutButton = document.getElementById('checkout-button');
     let order = [];
+    let updateOrderSummary;
 
-    // Animate elements on scroll
+    function handleAddToCart(button) {
+        button.classList.add('loading');
+        button.innerHTML = '<i class="fas fa-spinner"></i> Adding...';
+        button.classList.remove('loading');
+        button.classList.add('success');
+        button.innerHTML = '<i class="fas fa-check"></i> Added';
+        setTimeout(() => {
+            button.classList.remove('success');
+            button.innerHTML = '<i class="fas fa-plus"></i> Add to Cart';
+        }, 1000);
+    }
+
+    function initializeCartElements() {
+        const orderItems = document.getElementById('order-items');
+        const totalPrice = document.getElementById('total-price');
+        const clearOrderButton = document.getElementById('clear-order');
+        const checkoutButton = document.getElementById('checkout-button');
+        const cartEmpty = document.querySelector('.cart-empty'); // Add this line
+
+        if (orderItems && totalPrice) {
+            updateOrderSummary = function() {
+                orderItems.innerHTML = '';
+                let total = 0;
+                
+                // Toggle cart empty message
+                if (cartEmpty) {
+                    cartEmpty.style.display = order.length === 0 ? 'block' : 'none';
+                }
+
+                order.forEach((item, index) => {
+                    const li = document.createElement('li');
+                    li.innerHTML = `
+                        <span>${item.name}</span>
+                        <div class="item-controls">
+                            <span class="price">RM ${item.price.toFixed(2)}</span>
+                            <button class="remove-item" data-index="${index}">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                    `;
+                    orderItems.appendChild(li);
+                    total += item.price;
+                });
+
+                totalPrice.textContent = `Total: RM ${total.toFixed(2)}`;
+                
+                const cartCount = document.querySelector('.cart-count');
+                if (cartCount) {
+                    cartCount.textContent = order.length;
+                    cartCount.classList.toggle('visible', order.length > 0);
+                }
+                
+                if (checkoutButton) {
+                    checkoutButton.style.display = order.length > 0 ? 'inline-block' : 'none';
+                }
+            };
+
+            if (clearOrderButton) {
+                clearOrderButton.addEventListener('click', function() {
+                    if (!confirm('Are you sure you want to clear your cart?')) return;
+                    order = [];
+                    updateOrderSummary();
+                    alert('Cart cleared');
+                });
+            }
+
+            if (checkoutButton) {
+                checkoutButton.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    alert('Thank you for your order! Total: RM' + order.reduce((sum, item) => sum + item.price, 0).toFixed(2));
+                    order = [];
+                    updateOrderSummary();
+                    window.location.reload(true);
+                });
+            }
+
+            return updateOrderSummary;
+        }
+        return null;
+    }
+
+    function initializeAddToOrderButtons() {
+        const addToOrderButtons = document.querySelectorAll('.add-to-order');
+        
+        if (addToOrderButtons.length > 0) {
+            addToOrderButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const foodItem = this.closest('.food-item');
+                    const name = foodItem.dataset.name;
+                    const price = parseFloat(foodItem.dataset.price);
+
+                    handleAddToCart(this);
+                    order.push({ name, price });
+                    if (updateOrderSummary) updateOrderSummary();
+                    showToast(`Added ${name} to cart`);
+                });
+            });
+        }
+    }
+
     const animateOnScroll = () => {
         const elements = document.querySelectorAll('.animate-on-scroll');
         elements.forEach(element => {
@@ -61,20 +155,18 @@ document.addEventListener('DOMContentLoaded', function() {
     window.addEventListener('scroll', animateOnScroll);
     animateOnScroll();
 
-    // Mobile Menu Toggle
     const mobileMenuIcon = document.querySelector('.mobile-menu-icon');
     const navLinks = document.querySelector('.nav-links');
 
     if (mobileMenuIcon && navLinks) {
         mobileMenuIcon.addEventListener('click', (e) => {
-            e.stopPropagation(); // Prevent event from bubbling
+            e.stopPropagation();
             navLinks.classList.toggle('active');
             const icon = mobileMenuIcon.querySelector('i');
             icon.classList.toggle('fa-bars');
             icon.classList.toggle('fa-times');
         });
 
-        // Close menu when clicking outside
         document.addEventListener('click', (e) => {
             if (!navLinks.contains(e.target) && !mobileMenuIcon.contains(e.target)) {
                 navLinks.classList.remove('active');
@@ -84,7 +176,6 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
 
-        // Close menu when clicking a link
         navLinks.querySelectorAll('a').forEach(link => {
             link.addEventListener('click', () => {
                 navLinks.classList.remove('active');
@@ -95,98 +186,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Order functionality
-    if (addToOrderButtons.length > 0 && orderItems && totalPrice) {
-        function updateOrderSummary() {
-            orderItems.innerHTML = '';
-            let total = 0;
-
-            order.forEach((item, index) => {
-                const li = document.createElement('li');
-                li.innerHTML = `
-                    <span>${item.name}</span>
-                    <div class="item-controls">
-                        <span class="price">${item.price.toFixed(2)}</span>
-                        <button class="remove-item" data-index="${index}">
-                            <i class="fas fa-times"></i>
-                        </button>
-                    </div>
-                `;
-                orderItems.appendChild(li);
-                total += item.price;
-            });
-
-            totalPrice.textContent = `Total: $${total.toFixed(2)}`;
-            
-            // Update cart count
-            const cartCount = document.querySelector('.cart-count');
-            if (cartCount) {
-                cartCount.textContent = order.length;
-                cartCount.classList.toggle('visible', order.length > 0);
-            }
-            
-            if (checkoutButton) {
-                checkoutButton.style.display = order.length > 0 ? 'inline-block' : 'none';
-            }
-        }
-
-        function handleAddToCart(button) {
-            // Add loading state
-            button.classList.add('loading');
-            button.innerHTML = '<i class="fas fa-spinner"></i> Adding...';
-
-            // Remove loading state
-            button.classList.remove('loading');
-            
-            // Show success state
-            button.classList.add('success');
-            button.innerHTML = '<i class="fas fa-check"></i> Added';
-
-            // Reset button after 1 second
-            setTimeout(() => {
-                button.classList.remove('success');
-                button.innerHTML = '<i class="fas fa-plus"></i> Add to Cart';
-            }, 1000);
-        }
-
-        addToOrderButtons.forEach(button => {
-            button.addEventListener('click', function() {
-                const foodItem = this.closest('.food-item');
-                const name = foodItem.dataset.name;
-                const price = parseFloat(foodItem.dataset.price);
-
-                handleAddToCart(this);
-                order.push({ name, price });
-                updateOrderSummary();
-                showToast(`Added ${name} to cart`);
-            });
-        });
-
-        if (clearOrderButton) {
-            clearOrderButton.addEventListener('click', function() {
-                order = [];
-                if (!confirm('Are you sure you want to clear your cart?')) {
-                    return;
-                }
-                updateOrderSummary();
-                alert('Cart cleared');
-            });
-        }
-
-        if (checkoutButton) {
-            checkoutButton.addEventListener('click', function(e) {
-                e.preventDefault();
-                alert('Thank you for your order! Total: $' + order.reduce((sum, item) => sum + item.price, 0).toFixed(2));
-                order = [];
-                updateOrderSummary();
-                window.location.reload(true);
-            });
-        }
-
-        updateOrderSummary();
-    }
-
-    // Smooth scrolling for anchor links
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function (e) {
             e.preventDefault();
@@ -196,13 +195,11 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // Add these near the top with other constants
     const cartIcon = document.querySelector('.cart-icon');
     const cartPanel = document.querySelector('.cart-panel');
     const closeCart = document.querySelector('.close-cart');
     const cartCount = document.querySelector('.cart-count');
 
-    // Add this after the existing order functionality
     if (cartIcon && cartPanel && closeCart) {
         cartIcon.addEventListener('click', () => {
             cartPanel.classList.add('open');
@@ -212,27 +209,23 @@ document.addEventListener('DOMContentLoaded', function() {
             cartPanel.classList.remove('open');
         });
 
-        // Close cart when clicking outside
         document.addEventListener('click', (e) => {
             if (!cartPanel.contains(e.target) && !cartIcon.contains(e.target)) {
                 cartPanel.classList.remove('open');
             }
         });
 
-        // Instead of redefining updateOrderSummary, just update cart count directly
         if (cartCount) {
             cartCount.textContent = order.length;
         }
     }
 
-    // Add escape key listener to close cart
     document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape' && cartPanel) {
             cartPanel.classList.remove('open');
         }
     });
 
-    // Toast notification function
     function showToast(message, type = 'success') {
         const toast = document.createElement('div');
         toast.className = `toast ${type}`;
@@ -252,7 +245,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }, 3000);
     }
 
-    // Newsletter form handler
     const newsletterForm = document.querySelector('.newsletter-form');
     if (newsletterForm) {
         newsletterForm.addEventListener('submit', function(e) {
@@ -260,15 +252,12 @@ document.addEventListener('DOMContentLoaded', function() {
             const emailInput = this.querySelector('input[type="email"]');
             const email = emailInput.value;
             
-            // Show success message
             showToast(`Thanks for subscribing! We'll send updates to ${email}`, 'success');
             
-            // Reset the form
             emailInput.value = '';
         });
     }
 
-    // Add remove item functionality
     document.addEventListener('click', function(e) {
         if (e.target.closest('.remove-item')) {
             const index = e.target.closest('.remove-item').dataset.index;
@@ -296,10 +285,8 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Call this function when the page loads
     document.addEventListener('DOMContentLoaded', handleImageLoading);
 
-    // Form Submission
     const contactForm = document.getElementById('contact-form');
     if (contactForm) {
         contactForm.addEventListener('submit', function(e) {
@@ -307,13 +294,11 @@ document.addEventListener('DOMContentLoaded', function() {
             const formData = new FormData(contactForm);
             const formValues = Object.fromEntries(formData.entries());
             
-            // Show success message
             showToast('Thank you for your message! We will get back to you soon.', 'success');
             contactForm.reset();
         });
     }
 
-    // Add these new functions for menu category handling
     function createMenuItemElement(item) {
         const itemDiv = document.createElement('div');
         itemDiv.className = 'food-item';
@@ -328,7 +313,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     <p>${item.description}</p>
                 </div>
                 <div class="price-action">
-                    <span class="price">$${item.price.toFixed(2)}</span>
+                    <span class="price">RM ${item.price.toFixed(2)}</span>
                     <button class="add-to-order">
                         <i class="fas fa-plus"></i> Add to Cart
                     </button>
@@ -343,28 +328,28 @@ document.addEventListener('DOMContentLoaded', function() {
         const menuContainer = document.querySelector('.menu-container');
         if (!menuContainer) return;
 
-        // Clear current content
         menuContainer.innerHTML = '';
         
-        // Create and append menu items for the selected category
         const items = menuData[category];
         items.forEach(item => {
             const itemElement = createMenuItemElement(item);
             menuContainer.appendChild(itemElement);
         });
 
-        // Add animation class to new items
         setTimeout(() => {
             document.querySelectorAll('.food-item').forEach(item => {
                 item.classList.add('show');
             });
         }, 100);
 
-        // Reinitialize add to order buttons
+        const cartUpdate = initializeCartElements();
+        if (cartUpdate) {
+            cartUpdate();
+        }
+        
         initializeAddToOrderButtons();
     }
 
-    // Initialize category buttons
     const categoryButtons = document.querySelectorAll('.category-btn');
     if (categoryButtons.length > 0) {
         categoryButtons.forEach(button => {
@@ -375,11 +360,9 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         });
 
-        // Show default category (appetizers)
         showCategory('appetizers');
     }
 
-    // Initialize floating cart button
     const cartButton = document.querySelector('.cart-button');
 
     if (cartButton && cartPanel && closeCart) {
@@ -391,29 +374,10 @@ document.addEventListener('DOMContentLoaded', function() {
             cartPanel.classList.remove('open');
         });
 
-        // Close cart when clicking outside
         document.addEventListener('click', (e) => {
             if (!cartPanel.contains(e.target) && !cartButton.contains(e.target)) {
                 cartPanel.classList.remove('open');
             }
         });
-    }
-
-    function initializeAddToOrderButtons() {
-        const addToOrderButtons = document.querySelectorAll('.add-to-order');
-        if (addToOrderButtons.length > 0) {
-            addToOrderButtons.forEach(button => {
-                button.addEventListener('click', function() {
-                    const foodItem = this.closest('.food-item');
-                    const name = foodItem.dataset.name;
-                    const price = parseFloat(foodItem.dataset.price);
-
-                    handleAddToCart(this);
-                    order.push({ name, price });
-                    updateOrderSummary();
-                    showToast(`Added ${name} to cart`);
-                });
-            });
-        }
     }
 });
