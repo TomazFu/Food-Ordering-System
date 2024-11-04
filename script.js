@@ -96,21 +96,18 @@ document.addEventListener('DOMContentLoaded', function() {
             button.classList.add('loading');
             button.innerHTML = '<i class="fas fa-spinner"></i> Adding...';
 
-            // Simulate adding to cart (remove this timeout in production)
-            setTimeout(() => {
-                // Remove loading state
-                button.classList.remove('loading');
-                
-                // Show success state
-                button.classList.add('success');
-                button.innerHTML = '<i class="fas fa-check"></i> Added';
+            // Remove loading state
+            button.classList.remove('loading');
+            
+            // Show success state
+            button.classList.add('success');
+            button.innerHTML = '<i class="fas fa-check"></i> Added';
 
-                // Reset button after 1 second
-                setTimeout(() => {
-                    button.classList.remove('success');
-                    button.innerHTML = '<i class="fas fa-plus"></i> Add to Cart';
-                }, 1000);
-            }, 500);
+            // Reset button after 1 second
+            setTimeout(() => {
+                button.classList.remove('success');
+                button.innerHTML = '<i class="fas fa-plus"></i> Add to Cart';
+            }, 1000);
         }
 
         addToOrderButtons.forEach(button => {
@@ -129,7 +126,11 @@ document.addEventListener('DOMContentLoaded', function() {
         if (clearOrderButton) {
             clearOrderButton.addEventListener('click', function() {
                 order = [];
+                if (!confirm('Are you sure you want to clear your cart?')) {
+                    return;
+                }
                 updateOrderSummary();
+                alert('Cart cleared');
             });
         }
 
@@ -139,6 +140,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 alert('Thank you for your order! Total: $' + order.reduce((sum, item) => sum + item.price, 0).toFixed(2));
                 order = [];
                 updateOrderSummary();
+                window.location.reload(true);
             });
         }
 
@@ -196,7 +198,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const toast = document.createElement('div');
         toast.className = `toast ${type}`;
         toast.innerHTML = `
-            <i class="fas ${type === 'success' ? 'fa-check-circle' : 'fa-exclamation-circle'}"></i>
+            <i class="fas ${type === 'success' ? 'fa-check-circle' : 'fa-times-circle'}"></i>
             <span>${message}</span>
         `;
         
@@ -234,7 +236,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const removedItem = order[index];
             order.splice(index, 1);
             updateOrderSummary();
-            showToast(`Removed ${removedItem.name} from cart`);
+            showToast(`Removed ${removedItem.name} from cart`, 'error');
         }
     });
 

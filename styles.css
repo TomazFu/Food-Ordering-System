@@ -1088,6 +1088,18 @@ footer {
     font-size: 1.2rem;
 }
 
+.toast.success {
+    background-color: #4CAF50;
+}
+
+.toast.error {
+    background-color: #ff5252;
+}
+
+.toast i {
+    font-size: 1.2rem;
+}
+
 @keyframes slideIn {
     from {
         transform: translateX(100%);
@@ -1755,3 +1767,4 @@ footer {
         margin-top: 1rem;
     }
 }
+
