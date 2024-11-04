@@ -1843,7 +1843,7 @@ footer {
     flex-direction: row;  /* Ensure items are in a row */
     justify-content: space-between;
     align-items: center;
-    padding: 10px 0;
+    padding: 10px 20px;
 }
 
 /* Item Info (Name and Description) */
@@ -1883,6 +1883,7 @@ footer {
     font-weight: bold;
     color: #ff6b6b;
     white-space: nowrap;  /* Prevent price from wrapping */
+        
 }
 
 /* Mobile responsiveness */
