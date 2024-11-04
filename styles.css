@@ -430,17 +430,6 @@ h1, h2, h3 {
     background-color: #ff6b6b;
 }
 
-/* Food item improvements */
-.food-item {
-    display: flex;
-    background-color: #fff;
-    border-radius: 8px;
-    padding: 1rem;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    position: relative;
-    overflow: hidden;
-}
-
 .food-item:hover {
     transform: translateY(-5px);
     box-shadow: 0 5px 15px rgba(0,0,0,0.2);
@@ -1329,17 +1318,8 @@ footer {
     border-bottom: 2px solid #ff6b6b;
 }
 
-.food-item {
-    display: flex;
-    background: white;
-    margin-bottom: 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-    overflow: hidden;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
 .food-image {
+    padding: 1rem;
     width: 120px;
     height: 120px;
     object-fit: cover;
@@ -1835,4 +1815,87 @@ footer {
     justify-content: center;
     font-size: 0.8rem;
     font-weight: bold;
+}
+.food-item {
+    display: flex;
+    background: white;
+    margin-bottom: 20px;
+    border-radius: 12px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    height: 220px;
+    padding: 20px;
+}
+
+/* Image styles */
+.food-item img {
+    width: 200px;
+    height: 180px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-right: 20px;
+}
+/* Food Details Container */
+.food-details {
+    flex: 1;
+    display: flex;
+    flex-direction: row;  /* Ensure items are in a row */
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+}
+
+/* Item Info (Name and Description) */
+.item-info {
+    flex: 1;
+    padding-right: 30px;
+    display: flex;
+    flex-direction: column;  /* Changed to column to stack elements */
+    align-items: flex-start; /* Left align items */
+    justify-content: center;
+}
+
+.item-info h3 {
+    margin: 0 0 10px 0;  /* Added bottom margin for spacing */
+    color: #333;
+    font-size: 1.2rem;
+}
+
+.item-info p {
+    color: #666;
+    margin: 0;
+    font-size: 0.9rem;
+    line-height: 1.4;
+}
+
+/* Price and Action Button Container */
+.price-action {
+    display: flex;
+    flex-direction: row;  /* Make price and button in a row */
+    align-items: center;
+    gap: 20px;
+    min-width: 200px;  /* Increased to accommodate row layout */
+}
+
+.price {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #ff6b6b;
+    white-space: nowrap;  /* Prevent price from wrapping */
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+    .food-details,
+    .item-info,
+    .price-action {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .item-info {
+        padding-right: 0;
+        margin-bottom: 15px;
+    }
 }
