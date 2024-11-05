@@ -577,18 +577,36 @@ h1, h2, h3 {
 }
 
 #clear-order {
-    background-color: #333;
-    color: #fff;
+    background-color: #ff5252;  /* Red background */
+    color: white;
     border: none;
     padding: 0.5rem 1rem;
     border-radius: 5px;
     cursor: pointer;
-    transition: background-color 0.3s ease;
-    margin-right: 0.5rem;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 500;
+    box-shadow: 0 2px 5px rgba(255, 82, 82, 0.3);
+    font-weight: bold;
+}
+
+#clear-order::before {
+    content: '\f2ed';  /* Trash bin icon from Font Awesome */
+    font-family: 'Font Awesome 6 Free';
+    font-weight: 900;
 }
 
 #clear-order:hover {
-    background-color: #555;
+    background-color: #ff3333;  /* Darker red on hover */
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(255, 82, 82, 0.4);
+}
+
+#clear-order:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 4px rgba(255, 82, 82, 0.4);
 }
 
 #checkout-button {
@@ -599,6 +617,7 @@ h1, h2, h3 {
     padding: 0.5rem 1rem;
     border-radius: 5px;
     transition: background-color 0.3s ease;
+    border: none;
 }
 
 #checkout-button:hover {
@@ -1032,6 +1051,7 @@ footer {
     display: flex;
     gap: 1rem;
     margin-top: 1.5rem;
+    margin-bottom: 1.5rem;
 }
 
 /* Media query for mobile */

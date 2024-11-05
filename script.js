@@ -113,13 +113,35 @@ document.addEventListener('DOMContentLoaded', function() {
                     alert('Thank you for your order! Total: RM' + order.reduce((sum, item) => sum + item.price, 0).toFixed(2));
                     order = [];
                     updateOrderSummary();
-                    window.location.reload(true);
                 });
             }
 
             return updateOrderSummary;
         }
         return null;
+    }
+
+    updateOrderSummary = initializeCartElements();
+
+    function showCategory(category) {
+        const menuContainer = document.querySelector('.menu-container');
+        if (!menuContainer) return;
+
+        menuContainer.innerHTML = '';
+        
+        const items = menuData[category];
+        items.forEach(item => {
+            const itemElement = createMenuItemElement(item);
+            menuContainer.appendChild(itemElement);
+        });
+
+        setTimeout(() => {
+            document.querySelectorAll('.food-item').forEach(item => {
+                item.classList.add('show');
+            });
+        }, 100);
+        
+        initializeAddToOrderButtons();
     }
 
     function initializeAddToOrderButtons() {
@@ -139,6 +161,19 @@ document.addEventListener('DOMContentLoaded', function() {
                 });
             });
         }
+    }
+
+    const categoryButtons = document.querySelectorAll('.category-btn');
+    if (categoryButtons.length > 0) {
+        categoryButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                categoryButtons.forEach(btn => btn.classList.remove('active'));
+                button.classList.add('active');
+                showCategory(button.dataset.category);
+            });
+        });
+
+        showCategory('appetizers');
     }
 
     const animateOnScroll = () => {
@@ -195,29 +230,50 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    const cartIcon = document.querySelector('.cart-icon');
+    const cartButton = document.querySelector('.cart-button');
     const cartPanel = document.querySelector('.cart-panel');
     const closeCart = document.querySelector('.close-cart');
     const cartCount = document.querySelector('.cart-count');
 
-    if (cartIcon && cartPanel && closeCart) {
-        cartIcon.addEventListener('click', () => {
+    console.log('Cart Elements:', {
+        cartButton: cartButton,
+        cartPanel: cartPanel,
+        closeCart: closeCart,
+        cartCount: cartCount
+    });
+
+    if (cartButton && cartPanel && closeCart) {
+        cartButton.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            console.log('Cart button clicked');
             cartPanel.classList.add('open');
         });
 
-        closeCart.addEventListener('click', () => {
+        closeCart.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
             cartPanel.classList.remove('open');
         });
 
-        document.addEventListener('click', (e) => {
-            if (!cartPanel.contains(e.target) && !cartIcon.contains(e.target)) {
+        document.body.addEventListener('click', (e) => {
+            if (cartPanel.classList.contains('open') && 
+                !cartPanel.contains(e.target) && 
+                !cartButton.contains(e.target)) {
                 cartPanel.classList.remove('open');
             }
         });
 
         if (cartCount) {
             cartCount.textContent = order.length;
+            cartCount.classList.toggle('visible', order.length > 0);
         }
+    } else {
+        console.error('Some cart elements are missing:', {
+            cartButton: !!cartButton,
+            cartPanel: !!cartPanel,
+            closeCart: !!closeCart
+        });
     }
 
     document.addEventListener('keydown', (e) => {
@@ -272,7 +328,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    document.addEventListener('DOMContentLoaded', handleImageLoading);
+    handleImageLoading();
 
     const contactForm = document.getElementById('contact-form');
     if (contactForm) {
@@ -309,62 +365,5 @@ document.addEventListener('DOMContentLoaded', function() {
         `;
 
         return itemDiv;
-    }
-
-    function showCategory(category) {
-        const menuContainer = document.querySelector('.menu-container');
-        if (!menuContainer) return;
-
-        menuContainer.innerHTML = '';
-        
-        const items = menuData[category];
-        items.forEach(item => {
-            const itemElement = createMenuItemElement(item);
-            menuContainer.appendChild(itemElement);
-        });
-
-        setTimeout(() => {
-            document.querySelectorAll('.food-item').forEach(item => {
-                item.classList.add('show');
-            });
-        }, 100);
-
-        const cartUpdate = initializeCartElements();
-        if (cartUpdate) {
-            cartUpdate();
-        }
-        
-        initializeAddToOrderButtons();
-    }
-
-    const categoryButtons = document.querySelectorAll('.category-btn');
-    if (categoryButtons.length > 0) {
-        categoryButtons.forEach(button => {
-            button.addEventListener('click', () => {
-                categoryButtons.forEach(btn => btn.classList.remove('active'));
-                button.classList.add('active');
-                showCategory(button.dataset.category);
-            });
-        });
-
-        showCategory('appetizers');
-    }
-
-    const cartButton = document.querySelector('.cart-button');
-
-    if (cartButton && cartPanel && closeCart) {
-        cartButton.addEventListener('click', () => {
-            cartPanel.classList.add('open');
-        });
-
-        closeCart.addEventListener('click', () => {
-            cartPanel.classList.remove('open');
-        });
-
-        document.addEventListener('click', (e) => {
-            if (!cartPanel.contains(e.target) && !cartButton.contains(e.target)) {
-                cartPanel.classList.remove('open');
-            }
-        });
     }
 });
