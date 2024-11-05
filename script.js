@@ -275,6 +275,8 @@ document.addEventListener('DOMContentLoaded', function() {
     document.addEventListener('DOMContentLoaded', handleImageLoading);
 
     const contactForm = document.getElementById('contact-form');
+    const newsletterForm = document.getElementById('newsletter-form');
+
     if (contactForm) {
         contactForm.addEventListener('submit', function(e) {
             e.preventDefault();
@@ -284,6 +286,51 @@ document.addEventListener('DOMContentLoaded', function() {
             showToast('Thank you for your message! We will get back to you soon.', 'success');
             contactForm.reset();
         });
+    }
+
+    // Function to initialize newsletter form
+    function initializeNewsletterForm() {
+        const newsletterForm = document.getElementById('newsletter-form');
+        
+        if (newsletterForm) {
+            newsletterForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const emailInput = this.querySelector('input[type="email"]');
+                const email = emailInput.value.trim();
+                
+                if (email) {
+                    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                    if (!emailRegex.test(email)) {
+                        showToast('Please enter a valid email address', 'error');
+                        return;
+                    }
+                    
+                    showToast(`Thank you for subscribing with ${email}!`, 'success');
+                    this.reset();
+                } else {
+                    showToast('Please enter an email address', 'error');
+                }
+            });
+        }
+    }
+
+    // Initialize form when footer is loaded
+    const footerObserver = new MutationObserver(function(mutations) {
+        mutations.forEach(function(mutation) {
+            if (mutation.addedNodes.length) {
+                const newsletterForm = document.getElementById('newsletter-form');
+                if (newsletterForm) {
+                    initializeNewsletterForm();
+                    footerObserver.disconnect(); // Stop observing once form is found
+                }
+            }
+        });
+    });
+
+    // Start observing the footer placeholder
+    const footerPlaceholder = document.getElementById('footer-placeholder');
+    if (footerPlaceholder) {
+        footerObserver.observe(footerPlaceholder, { childList: true, subtree: true });
     }
 
     function createMenuItemElement(item) {
